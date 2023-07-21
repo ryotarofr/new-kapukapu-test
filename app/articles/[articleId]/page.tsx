@@ -33,71 +33,71 @@ import ConvertKitForm from '@/components/ConvertKitForm'
 
 // const metadata = await buildMetadata()
 
-// export async function generateMetadata({
-//   params,
-// }: {
-//   params: { articleId: string }
-// }): Promise<NextMetadata> {
-//   const articleId = params.articleId
-//   const metadata = await buildMetadata()
-//   const articleMetadata = metadata.articles.find(
-//     (article) => article.articleDir === articleId
-//   )
-//   console.log(articleMetadata);
+export async function generateMetadata({
+  params,
+}: {
+  params: { articleId: string }
+}): Promise<NextMetadata> {
+  const articleId = params.articleId
+  const metadata = await buildMetadata()
+  const articleMetadata = metadata.articles.find(
+    (article) => article.articleDir === articleId
+  )
+  console.log(articleMetadata);
 
-//   if (!articleMetadata) throw Error('Article Metadata not found.')
+  if (!articleMetadata) throw Error('Article Metadata not found.')
 
-//   // const imageUrl = new URL(
-//   //   '/api/og',
-//   //   `https://${
-//   //     process.env.NEXT_PUBLIC_PROD_URL || process.env.NEXT_PUBLIC_VERCEL_URL
-//   //   }`
-//   // )
-//   // imageUrl.searchParams.set('title', articleMetadata.title)
-//   // imageUrl.searchParams.set('author', articleMetadata.author)
-//   // imageUrl.searchParams.set('imageUrl', articleMetadata.jumbotron.url)
+  // const imageUrl = new URL(
+  //   '/api/og',
+  //   `https://${
+  //     process.env.NEXT_PUBLIC_PROD_URL || process.env.NEXT_PUBLIC_VERCEL_URL
+  //   }`
+  // )
+  // imageUrl.searchParams.set('title', articleMetadata.title)
+  // imageUrl.searchParams.set('author', articleMetadata.author)
+  // imageUrl.searchParams.set('imageUrl', articleMetadata.jumbotron.url)
 
-//   // )`https://${
+  // )`https://${
 
-//   // }/api/og?title=${encodeURIComponent(
-//   //   articleMetadata.title
-//   // )}&author=${encodeURIComponent(
-//   //   articleMetadata.author
-//   // )}&imageUrl=${encodeURIComponent(articleMetadata.jumbotron.url)}`
+  // }/api/og?title=${encodeURIComponent(
+  //   articleMetadata.title
+  // )}&author=${encodeURIComponent(
+  //   articleMetadata.author
+  // )}&imageUrl=${encodeURIComponent(articleMetadata.jumbotron.url)}`
 
-//   return {
-//     title: articleMetadata.title,
-//     description: articleMetadata.blurb,
-//     twitter: {
-//       card: 'summary_large_image',
-//       title: `${articleMetadata.title} | Kochie Engineering`,
-//       creator: '@kochie',
-//       creatorId: '90334112',
-//       description: articleMetadata.blurb,
-//     },
-//     keywords: [...articleMetadata.tags, ...articleMetadata.keywords],
-//     alternates: {
-//       canonical: `/articles/${articleMetadata.articleDir}`,
-//     },
-//     openGraph: {
-//       url: `/articles/${articleMetadata.articleDir}`,
-//       title: `${articleMetadata.title} | Kochie Engineering`,
-//       description: articleMetadata.blurb,
-//       type: 'article',
-//       publishedTime: articleMetadata.publishedDate,
-//       modifiedTime: articleMetadata?.editedDate || '',
-//       tags: [...articleMetadata.tags, ...articleMetadata.keywords],
-//       authors: [`/authors/${articleMetadata.author}`],
-//       // images: [
-//       //   {
-//       //     url: imageUrl,
-//       //     alt: articleMetadata.jumbotron.alt,
-//       //   },
-//       // ],
-//       siteName: 'Kochie Engineering',
-//     },
-//   }
-// }
+  return {
+    title: articleMetadata.title,
+    description: articleMetadata.blurb,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${articleMetadata.title} | Kochie Engineering`,
+      creator: '@kochie',
+      creatorId: '90334112',
+      description: articleMetadata.blurb,
+    },
+    keywords: [...articleMetadata.tags, ...articleMetadata.keywords],
+    alternates: {
+      canonical: `/articles/${articleMetadata.articleDir}`,
+    },
+    openGraph: {
+      url: `/articles/${articleMetadata.articleDir}`,
+      title: `${articleMetadata.title} | Kochie Engineering`,
+      description: articleMetadata.blurb,
+      type: 'article',
+      publishedTime: articleMetadata.publishedDate,
+      modifiedTime: articleMetadata?.editedDate || '',
+      tags: [...articleMetadata.tags, ...articleMetadata.keywords],
+      authors: [`/authors/${articleMetadata.author}`],
+      // images: [
+      //   {
+      //     url: imageUrl,
+      //     alt: articleMetadata.jumbotron.alt,
+      //   },
+      // ],
+      siteName: 'Kochie Engineering',
+    },
+  }
+}
 
 const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
   const articleId = params.articleId

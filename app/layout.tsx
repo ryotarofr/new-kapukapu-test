@@ -9,6 +9,7 @@ import ToasterProvider from '@/providers/ToasterProvider'
 import getContentsByUserId from '@/actions/getContentsByUserId'
 import Player from '@/components/Player'
 import getActiveProductsWithPrices from '@/actions/getActiveProductsWithPrices'
+import { ThemeButton, ThemeProvider } from '@/components/Theme'
 
 export const revalidate = 60
 export const dynamic = 'force-static'
@@ -34,9 +35,12 @@ export default async function RootLayout({
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider products={products} />
-            <Sidebar contents={userContents} >
-              {children}
-            </Sidebar>
+            <ThemeProvider>
+              <ThemeButton />
+              <Sidebar contents={userContents} >
+                {children}
+              </Sidebar>
+            </ThemeProvider>
             <Player />
           </UserProvider>
         </SupabaseProvider>

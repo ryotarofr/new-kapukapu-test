@@ -5,12 +5,33 @@ import getContents from '@/actions/getContents';
 import getPostMetadata from '@/utils/getPostMetadata';
 import PostPreview from '@/components/PostPreview';
 import Infomation from '@/components/Infomation';
+import { getAllArticlesMetadata } from '@/libs/article-path';
+import Gallery from '@/components/Gallery';
 
 
 // export const revalidate = 0;
 export const dynamic = 'force-static'
 
+export const metadata = {
+  openGraph: {
+    images: [
+      {
+        url: `https://${process.env.NEXT_PUBLIC_PROD_URL ||
+          process.env.NEXT_PUBLIC_VERCEL_URL ||
+          process.env.VERCEL_URL
+          }/_next/image?url=/images/umberto-jXd2FSvcRr8-unsplash.jpg&w=640&q=75`,
+        alt: 'Blog website',
+      },
+    ],
+    url: `https://${process.env.NEXT_PUBLIC_PROD_URL ||
+      process.env.NEXT_PUBLIC_VERCEL_URL ||
+      process.env.VERCEL_URL
+      }`,
+  },
+}
+
 export default async function Home() {
+  const articles = await getAllArticlesMetadata()
   const contents = await getContents()
 
   const postMetadata = getPostMetadata();
@@ -46,6 +67,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">{postPreviews}</div>
         </div>
       </div>
+      <Gallery articles={articles} />
     </div>
   )
 }
