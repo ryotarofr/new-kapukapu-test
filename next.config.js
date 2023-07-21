@@ -6,7 +6,11 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["idwitrlwanewneoypjki.supabase.co"],
+    domains: [
+      "idwitrlwanewneoypjki.supabase.co",
+      "avatars.githubusercontent.com",
+      "pbs.twimg.com",
+    ],
   },
 };
 
