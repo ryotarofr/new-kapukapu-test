@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JUMBOTRON COMPONENT renders correctly 1`] = `
+<div
+  className="bg-black overflow-hidden relative"
+  style={
+    {
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="relative filter brightness-75 blur-sm w-full h-full transform-gpu scale-110"
+  >
+    <div />
+  </div>
+  <div
+    className="relative -top-full w-full h-full"
+  >
+    <div />
+  </div>
+</div>
+`;

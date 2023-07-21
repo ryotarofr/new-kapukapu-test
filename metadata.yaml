@@ -1,0 +1,97 @@
+authors:
+  kochie:
+    username: ryotarofr
+    fullName: Ryotaro Fujii
+    email: ryoryo.fr0608@gmail.com
+    avatar:
+      src: kochie.png
+    bio: >
+      👋 I'm Robert, a Software Engineer from Melbourne, Australia. I
+      write about a bunch of different topics including technology, science,
+      business, and maths.
+    socialMedia:
+      - name: twitter
+        link: https://twitter.com/kochie
+        icon: [fab, twitter]
+        color: "#1da1f2"
+        tracking: T36VD8UN
+
+      - name: instagram
+        link: https://instagram.com/rkkochie
+        icon: [fab, instagram]
+        color: "#833ab4"
+        tracking: EJCVUQXE
+
+      - name: linkedin
+        link: https://linkedin.com/in/rkkochie
+        icon: [fab, linkedin]
+        color: "#0077b5"
+        tracking: RMXXVNIC
+
+      - name: website
+        link: https://me.kochie.io
+        icon: [fal, globe]
+        color: wheat
+        tracking: SEQGQC1X
+
+      - name: mastodon
+        link: https://melb.social/@kochie
+        icon: [fab, mastodon]
+        color: "#6364FF"
+        tracking: BQFLVSOP
+
+      - name: email
+        link: mailto:robert@kochie.io
+        icon: [fal, envelope]
+        color: red
+        tracking: ""
+
+tags:
+  - name: 100DTO
+    blurb: 100 Days to Offload - my quest to publish 100 posts in a year.
+    image:
+      src: aaron-burden-y02jEX_B0O0-unsplash.jpg
+  - name: technology
+    blurb: technological musings
+    image:
+      src: victor-aznabaev-pjTU9Edzc1g-unsplash.jpg
+  - name: gaming
+    blurb: Video games are a clear and present threat to my productivity.
+    image:
+      src: lorenzo-herrera-p0j-mE6mGo4-unsplash.jpg
+  - name: physics
+    blurb: “All science is either physics or stamp collecting.”
+    image:
+      src: dan-meyers-F_DSvG5Fb0A-unsplash.jpg
+  - name: maths
+    blurb: Maybe I did learn something doing my homework.
+    image:
+      src: chris-liverani-rD2dc_2S3i0-unsplash.jpg
+  - name: foundry
+    blurb: An ongoing series about my metal foundry.
+    image:
+      src: ant-rozetsky-_qWeqqmpBpU-unsplash.jpg
+  - name: projects
+    blurb: Various projects that I've been working on.
+    image:
+      src: sven-mieke-fteR0e2BzKo-unsplash.jpg
+  - name: software
+    blurb: Articles related to programming and software engineering.
+    image:
+      src: yancy-min-842ofHC6MaI-unsplash.jpg
+  - name: frontend
+    blurb: Maybe I did learn something doing my homework.
+    image:
+      src: luke-chesser-JKUTrJ4vK00-unsplash.jpg
+  - name: electronics
+    blurb: Articles related to electronics and electrical engineering.
+    image:
+      src: michael-dziedzic-deHhHOttSdk-unsplash.jpg
+  - name: business
+    blurb: Money, money, money ... MONEY
+    image:
+      src: michael-dziedzic-deHhHOttSdk-unsplash.jpg
+  - name: cdk
+    blurb: Projects built with the AWS Cloud Development Kit
+    image:
+      src: cdk.png
