@@ -1,7 +1,8 @@
 'use client'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faArrowToTop } from '@fortawesome/pro-duotone-svg-icons'
+
 import { useCallback, useEffect, useState } from 'react'
+import { AiOutlineToTop } from 'react-icons/ai'
+
 
 export default function TopButton() {
   const [visible, setVisibility] = useState(false)
@@ -62,9 +63,10 @@ export default function TopButton() {
             className="fa-stack-1x group-hover:animate-bounce-orig text-black"
             size="2x"
           /> */}
-          <div className="fa-stack-1x group-hover:animate-bounce-orig text-black">
+          {/* <div className="fa-stack-1x group-hover:animate-bounce-orig text-black">
             faArrowToTopらしい
-          </div>
+          </div> */}
+          <AiOutlineToTop size={25} className="fa-stack-1x group-hover:animate-bounce-orig text-black" />
         </div>
       </div>
     </div>

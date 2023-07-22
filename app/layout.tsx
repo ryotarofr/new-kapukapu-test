@@ -76,7 +76,7 @@ const Page = ({ children }: { children: ReactNode }) => {
     >
       {/* <Topbar /> */}
       <div className="flex-grow">{children}</div>
-      <Footer title="Kochie Engineering" description={description} />
+      <Footer title="Coded by Ryotaro Fujii" description={description} />
       {/* <Footer
         title={'Kochie Engineering'}
         links={[

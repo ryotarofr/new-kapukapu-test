@@ -1,13 +1,14 @@
 import {
   faGithub,
+  faInstagram,
   faMastodon,
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons'
-// import { faCopyright } from '@fortawesome/pro-duotone-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import Logo from './blog-logo.svg'
+import { AiFillCopyrightCircle } from 'react-icons/ai'
 
 const navigation = {
   affiliates: [{ name: 'Blogroll', href: 'https://blogroll.org/' }],
@@ -29,20 +30,20 @@ const navigation = {
     },
   ],
   social: [
-    {
-      name: 'Twitter',
-      href: 'https://twitter.com/kochie',
-      icon: () => <FontAwesomeIcon icon={faTwitter} size="xl" className="" />,
-    },
+    // {
+    //   name: 'Twitter',
+    //   href: 'https://twitter.com/kochie',
+    //   icon: () => <FontAwesomeIcon icon={faTwitter} size="xl" className="" />,
+    // },
     {
       name: 'Github',
-      href: 'https://github.com/kochie',
+      href: 'https://github.com/ryotarofr',
       icon: () => <FontAwesomeIcon icon={faGithub} size="xl" className="" />,
     },
     {
-      name: 'Mastodon',
-      href: 'https://melb.social/@kochie',
-      icon: () => <FontAwesomeIcon icon={faMastodon} size="xl" className="" />,
+      name: 'Instagram',
+      href: 'https://www.instagram.com/stories/fr__1030',
+      icon: () => <FontAwesomeIcon icon={faInstagram} size="xl" className="" />,
     },
   ],
 }
@@ -54,22 +55,22 @@ interface FooterProps {
 
 export function Footer({ title, description }: FooterProps) {
   return (
-    <footer className="bg-[#222222]" aria-labelledby="footer-heading">
+    <footer className="bg-[#f4f8fb] dark:bg-[#222222]" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
       <div className="mx-auto lg:max-w-5xl pb-8">
-        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24" />
+        <div className="mt-16 border-t border-black/20 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24" />
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <Image className="" src={Logo} alt="Company name" />
-            <p className="text-sm leading-6 text-gray-300">{description}</p>
+            <p className="text-sm leading-6 text-gray-800 dark:text-gray-300">{description}</p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-500 hover:text-gray-400"
+                  className="text-gray-800 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-400"
                 >
                   <span className="sr-only">{item.name}</span>
                   <item.icon aria-hidden="true" />
@@ -80,7 +81,7 @@ export function Footer({ title, description }: FooterProps) {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div className="mt-10 md:mt-0 md:col-start-2">
-                <h3 className="text-sm font-semibold leading-6 text-white">
+                <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
                   Affiliates
                 </h3>
                 <ul role="list" className="mt-6 space-y-3">
@@ -88,7 +89,7 @@ export function Footer({ title, description }: FooterProps) {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                        className="text-sm leading-6 text-gray-800 dark:text-gray-300 hover:text-gray-500 hover:dark:text-white"
                       >
                         {item.name}
                       </Link>
@@ -99,7 +100,7 @@ export function Footer({ title, description }: FooterProps) {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-white">
+                <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
                   Friends
                 </h3>
                 <ul role="list" className="mt-6 space-y-3">
@@ -107,7 +108,7 @@ export function Footer({ title, description }: FooterProps) {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                        className="text-sm leading-6 text-gray-800 dark:text-gray-300 hover:text-gray-500 hover:dark:text-white"
                       >
                         {item.name}
                       </Link>
@@ -116,7 +117,7 @@ export function Footer({ title, description }: FooterProps) {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-white">
+                <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
                   Links
                 </h3>
                 <ul role="list" className="mt-6 space-y-3">
@@ -124,7 +125,7 @@ export function Footer({ title, description }: FooterProps) {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                        className="text-sm leading-6 text-gray-800 dark:text-gray-300 hover:text-gray-500 hover:dark:text-white"
                       >
                         {item.name}
                       </Link>
@@ -135,11 +136,11 @@ export function Footer({ title, description }: FooterProps) {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-gray-400">
+        <div className="text-center mt-16 border-t border-black/20 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24">
+          <p className="flex justify-center text-xs leading-5 text-gray-600 dark:text-gray-400">
             <span>{title}</span>{' '}
-            {/* <FontAwesomeIcon icon={faCopyright} className={''} />{' '} */}
-            <span>2020</span>
+            <AiFillCopyrightCircle size={16} className='' />{' '}
+            <span>in 2023</span>
           </p>
         </div>
       </div>

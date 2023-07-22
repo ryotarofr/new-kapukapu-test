@@ -2,11 +2,9 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {
-//   faLightbulbSlash,
-//   faLightbulbOn,
-//   faCogs,
-// } from '@fortawesome/pro-duotone-svg-icons'
+import { MdDarkMode } from "react-icons/md"
+import { BiSolidSun } from "react-icons/bi"
+import { IoMdSettings } from "react-icons/io"
 
 import { THEME, useTheme } from './context'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
@@ -28,7 +26,8 @@ const ThemeButton = () => {
         className="fa-stack-2x dark:text-white text-black"
       />
       {/* <FontAwesomeIcon icon={faLightbulbSlash} className="fa-stack-1x" /> */}
-      <div className="fa-stack-1x">faLightbulbSlashらしい</div>
+      <MdDarkMode className="fa-stack-1x text-white dark:text-black" />
+      {/* <div className="fa-stack-1x">faLightbulbSlashらしい</div> */}
     </span>
   )
   const bulbOnDiv = (
@@ -45,7 +44,8 @@ const ThemeButton = () => {
         className="fa-stack-2x dark:text-white text-black"
       />
       {/* <FontAwesomeIcon icon={faLightbulbOn} className="fa-stack-1x" /> */}
-      <div className="fa-stack-1x">faLightbulbOnらしい</div>
+      <BiSolidSun className="fa-stack-1x text-white dark:text-black" />
+      {/* <div className="fa-stack-1x">faLightbulbOnらしい</div> */}
     </div>
   )
   const systemDiv = (
@@ -62,7 +62,8 @@ const ThemeButton = () => {
         className="fa-stack-2x dark:text-white opacity-100 text-black"
       />
       {/* <FontAwesomeIcon icon={faCogs} className="fa-stack-1x" /> */}
-      <div className="fa-stack-1x">faCogsらしい</div>
+      <IoMdSettings className="fa-stack-1x text-white dark:text-black" />
+      {/* <div className="fa-stack-1x">faCogsらしい</div> */}
     </div>
   )
 
@@ -102,7 +103,7 @@ const ThemeButton = () => {
               className="fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faLightbulbSlash} className="fa-stack-1x" /> */}
-            <div className="fa-stack-1x">faLightbulbSlashらしい</div>
+            <MdDarkMode className="fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
 
@@ -117,7 +118,7 @@ const ThemeButton = () => {
               className="fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faLightbulbOn} className="fa-stack-1x" /> */}
-            <div className="fa-stack-1x">faLightbulbOnらしい</div>
+            <BiSolidSun className="fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
 
@@ -132,7 +133,7 @@ const ThemeButton = () => {
               className="fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faCogs} className="fa-stack-1x" /> */}
-            <div className="fa-stack-1x">faCogsらしい</div>
+            <IoMdSettings className="fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
       </div>
