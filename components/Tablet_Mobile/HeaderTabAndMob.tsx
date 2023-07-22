@@ -10,7 +10,7 @@ const HeaderTabAndMob = () => {
     <div
       className="w-full px-10 pt-4 pb-2">
       <div className="flex justify-between">
-        <Link href="/" className="text-3xl font-bold">カプコード</Link>
+        <Link href="/" className="text-3xl font-bold dark:text-white">カプコード</Link>
         <div className="flex items-center">
           <Link href="/search" className='p-[6px] mr-2'>
             <BiSearch size={24} />

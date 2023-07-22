@@ -69,7 +69,7 @@ const Sidebar: FC<SidebarProps> = ({ contents }) => {
       "
       >
         <Box>
-          <Link href="/" className="text-center p-4 text-3xl font-bold">カプコード</Link>
+          <Link href="/" className="text-center p-4 text-3xl font-bold dark:text-white">カプコード</Link>
         </Box>
 
         <Box>

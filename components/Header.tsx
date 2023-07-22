@@ -12,6 +12,7 @@ import { useUser } from "@/hooks/useUser";
 import usePlayer from "@/hooks/usePlayer";
 
 import Button from './Button';
+import { ThemeButton } from "./Theme";
 
 
 interface HeaderProps {
@@ -57,13 +58,13 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
               xl:gap-x-4">
                 <Button
                   onClick={handleLogout}
-                  className="bg-white px-6 py-2"
+                  className="bg-neutral-900 dark:bg-white text-neutral-300 dark:text-neutral-700 px-6 py-2"
                 >
                   logout
                 </Button>
                 <Button
                   onClick={() => router.push('/account')}
-                  className="bg-white"
+                  className="bg-neutral-900 dark:bg-white text-neutral-300 dark:text-neutral-700"
                 >
                   <FaUserAlt />
                 </Button>
@@ -72,7 +73,7 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
               <>
                 <div>
                   <Button
-                    className="bg-transparent text-neutral-300 font-medium"
+                    className="bg-transparent dark:text-neutral-300 text-neutral-700 font-medium"
                     onClick={authModal.onOpen}
                   >
                     Sign Up
@@ -80,7 +81,7 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
                 </div>
                 <div>
                   <Button
-                    className="bg-white px-6 py-2"
+                    className="bg-neutral-900 dark:bg-white text-neutral-300 dark:text-neutral-700 px-6 py-2"
                     onClick={authModal.onOpen}
                   >
                     Login
@@ -92,6 +93,7 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
         </div>
       </div>
       {children}
+      <ThemeButton />
     </div>
   )
 }

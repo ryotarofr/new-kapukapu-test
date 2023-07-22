@@ -28,12 +28,14 @@ const SidebarItem: FC<SidebarItemProps> = ({
         text-md
         font-medium
         cursor-pointer
-        hover:text-white
+        hover:dark:text-white
+        hover:text-black
         transition
-        text-neutral-400
+        text-neutral-600
+        dark:text-neutral-400
         py-1
       `,
-        active && "text-white"
+        active && "dark:text-white text-slate-600"
       )}>
       <Icon size={26} />
       <p className="truncate w-full">{label}</p>

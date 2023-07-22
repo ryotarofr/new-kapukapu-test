@@ -33,7 +33,7 @@ export default function TopButton() {
   return (
     <div className={visible ? 'visible' : 'invisible'}>
       <div
-        className={`fixed bottom-6 right-6 h-20 w-20 bg-green-500 rounded-full z-10 group ${atTop ? 'animate-bounce-out' : 'animate-bounce-in'
+        className={`fixed bottom-6 right-6 h-20 w-20 bg-blue-400 rounded-full z-10 group ${atTop ? 'animate-bounce-out' : 'animate-bounce-in'
           }`}
       >
         <div style={{ transform: 'rotate(90deg) scaleX(-1)' }}>
@@ -44,7 +44,7 @@ export default function TopButton() {
               cy="25"
               r="22"
               fill="transparent"
-              stroke="red"
+              stroke="gray"
               strokeWidth={6}
               strokeDasharray={138.16}
               strokeDashoffset={138.16 * pc}

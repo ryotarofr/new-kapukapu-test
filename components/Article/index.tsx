@@ -48,7 +48,7 @@ const Article = ({
 }: PropsWithChildren<ArticleProps>): React.ReactElement => {
   return (
     <>
-      <Jumbotron
+      {/* <Jumbotron
         height={'60vh'}
         width={'100%'}
         background={
@@ -68,8 +68,8 @@ const Article = ({
           </div>
         }
         foreground={<div className="h-full w-full overflow-hidden" />}
-      />
-      <div className="relative max-w-5xl -mt-20 mx-auto px-4 mb-0 pb-10">
+      /> */}
+      <div className="relative max-w-5xl mt-20 mx-auto px-4 mb-0 pb-10">
         <div>
           <Card>
             <div className="p-4 md:p-8 lg:p-14">

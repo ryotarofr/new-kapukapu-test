@@ -60,14 +60,14 @@ export default async function Home() {
       <div className="rounded-lg h-full w-full overflow-hidden overflow-y-auto col-span-6">
         <div className="mt-8 mb-7">
           <div className="flex pl-10 items-center">
-            <h1 className="text-white text-lg font-semibold">
+            <h1 className="text-neutral-800 dark:text-white text-lg font-semibold">
               最近のお知らせ
             </h1>
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">{infoPreviews}</div>
           <Link
             href="/info"
-            className="flex items-center mt-2 ml-2 text-sm text-blue-400 hover:text-blue-700"
+            className="flex items-center mt-2 ml-2 text-sm text-blue-400 hover:text-blue-700 hover:dark:text-blue-200"
           >
             <div className="mr-2">すべて表示</div>
             <RiTerminalLine size={24} />
@@ -77,7 +77,7 @@ export default async function Home() {
             {/* <h1 className="text-white text-2xl font-semibold pb-4">
             コンテンツ
           </h1> */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">{postPreviews}</div>
+            {/* <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">{postPreviews}</div> */}
           </div>
         </div>
         <Gallery articles={articles} />

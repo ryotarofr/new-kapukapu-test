@@ -75,7 +75,7 @@ const ThemeButton = () => {
   }
 
   return (
-    <div className="fixed top-0 right-0 z-50">
+    <div className="z-50">
       <div className="pr-5 pt-5 pl-10 pb-10 animate duration-300 group flex-col flex gap-4 items-center text-white dark:text-black">
         <div className="">
           <div
