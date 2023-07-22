@@ -16,10 +16,10 @@ const LargeCard = ({
   articleDir,
 }: CardDetails): React.ReactElement => {
   return (
-    <div className="md:flex w-full h-full col-span-6 group shadow-sm hover:shadow-2xl dark:shadow-none transition ease-in-out duration-200 rounded-2xl">
+    <div className="lg:flex w-full h-full col-span-6 group shadow-sm hover:shadow-2xl dark:shadow-none transition ease-in-out duration-200 rounded-2xl">
       <Card>
-        <div className="flex flex-col md:flex-row">
-          <div className="relative rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none md:w-1/2 lg:w-2/3 overflow-hidden">
+        <div className="flex flex-col lg:flex-row">
+          <div className="relative rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none lg:w-1/2 lg:w-2/3 overflow-hidden">
             <Link href={`/articles/${articleDir}`}>
               <div className="transition ease-in-out duration-200 group-hover:grayscale-0 grayscale-30 filter">
                 <Image
@@ -30,7 +30,7 @@ const LargeCard = ({
                   width={600}
                   blurDataURL={image.lqip}
                   placeholder="blur"
-                  className="rounded-t-2xl w-full h-52 md:rounded-l-2xl md:rounded-tr-none md:h-80 group-hover:scale-110 transform-gpu transition ease-in-out duration-200 cursor-pointer"
+                  className="rounded-t-2xl w-full h-52 lg:rounded-l-2xl lg:rounded-tr-none lg:h-80 group-hover:scale-110 transform-gpu transition ease-in-out duration-200 cursor-pointer"
                   style={{
                     width: '100%',
                     height: '400px',
@@ -40,7 +40,7 @@ const LargeCard = ({
               </div>
             </Link>
             <div
-              className="absolute p-4 bottom-0 md:right-0 md:top-0 md:p-4 md:bottom-0"
+              className="absolute p-4 bottom-0 lg:right-0 lg:top-0 lg:p-4 lg:bottom-0"
               style={{ height: 'min-content' }}
             >
               <TagSet>

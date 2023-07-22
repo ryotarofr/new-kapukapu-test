@@ -50,7 +50,7 @@ const Article = ({
     <>
       <Jumbotron
         height={'60vh'}
-        width={'100vw'}
+        width={'100%'}
         background={
           <div className="relative w-full h-[60vh]">
             <Image

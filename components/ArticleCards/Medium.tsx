@@ -16,7 +16,7 @@ const MediumCard = ({
   articleDir,
 }: CardDetails): ReactElement => {
   return (
-    <div className="md:col-span-3 col-span-6 w-full h-full group">
+    <div className="lg:col-span-3 col-span-6 w-full h-full group">
       <Card>
         <div className="flex flex-col relative h-full">
           <div className="bg-black rounded-t-2xl relative overflow-hidden">

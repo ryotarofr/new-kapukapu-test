@@ -19,11 +19,11 @@ import HeaderTabAndMob from './Tablet_Mobile/HeaderTabAndMob';
 
 
 interface SidebarProps {
-  children: ReactNode,
+
   contents: Content[],
 }
 
-const Sidebar: FC<SidebarProps> = ({ children, contents }) => {
+const Sidebar: FC<SidebarProps> = ({ contents }) => {
   const pathname = usePathname()
   const player = usePlayer()
 
@@ -52,20 +52,22 @@ const Sidebar: FC<SidebarProps> = ({ children, contents }) => {
   ], [pathname])
   return (
     <div
-      className={twMerge(`
-      grid grid-cols-1 gap-2
-      md:grid md:grid-cols-4 md:gap-8 
-    `,
-        player.activeId && 'h-[calc(100%-80px)]'
-      )}>
+    //   className={twMerge(`
+    //   grid grid-cols-1 gap-2
+    //   md:grid md:grid-cols-12 md:gap-8
+    // `,
+    //     player.activeId && 'h-[calc(100%-80px)]'
+    //   )}
+    >
 
       {/* display large */}
       <div
         className="
           hidden
           md:flex md:flex-col md:gap-y-2 md:h-full md:p-2
-          
-      ">
+          md:col-span-3
+      "
+      >
         <Box>
           <Link href="/" className="text-center p-4 text-3xl font-bold">カプコード</Link>
         </Box>
@@ -91,32 +93,33 @@ const Sidebar: FC<SidebarProps> = ({ children, contents }) => {
       ">
         <HeaderTabAndMob />
       </div>
-      <main className="
-        h-full flex-1 overflow-y-auto py-2 col-span-2 
+      {/* <main 
+      className="
+        h-full flex-1 overflow-y-auto py-2 col-span-6
       ">
         {children}
-      </main>
-      <div
+      </main> */}
+      {/* <div
         className="
           hidden
           md:flex md:flex-col md:gap-y-2 md:h-full md:p-2
           xl:flex xl:flex-col xl:gap-y-2 xl:h-full xl:p-2
-      ">
-        <Box>
-          <div className="flex flex-col gap-y-4">
-            {/* <ThemeSwitch /> */}
-            {/* {routes.map((item) => (
+      "> */}
+      {/* <Box> */}
+      {/* <div className="flex flex-col gap-y-4"> */}
+      {/* <ThemeSwitch /> */}
+      {/* {routes.map((item) => (
               <SidebarItem
                 key={item.label}
                 {...item}
               />
             ))} */}
-            <Header className="rounded-lg">
-              {/* <div>aaaaa</div> */}
-            </Header>
-          </div>
-        </Box>
-      </div>
+      {/* <Header className="rounded-lg"> */}
+      {/* <div>aaaaa</div> */}
+      {/* </Header> */}
+      {/* </div> */}
+      {/* </Box> */}
+      {/* </div> */}
     </div>
   )
 }

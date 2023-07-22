@@ -17,9 +17,6 @@ const Gallery = ({
   articles,
   cardOrder = [
     LargeCard,
-    SmallCard,
-    SmallCard,
-    SmallCard,
     MediumCard,
     MediumCard,
   ],

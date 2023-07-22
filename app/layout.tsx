@@ -37,9 +37,9 @@ export default async function RootLayout({
             <ModalProvider products={products} />
             <ThemeProvider>
               <ThemeButton />
-              <Sidebar contents={userContents} >
+              {/* <Sidebar contents={userContents} > */}
                 {children}
-              </Sidebar>
+              {/* </Sidebar> */}
             </ThemeProvider>
             <Player />
           </UserProvider>
