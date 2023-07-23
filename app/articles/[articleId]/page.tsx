@@ -32,6 +32,8 @@ import AuthorCardLeft from '@/components/AuthorCardLeft'
 import ConvertKitForm from '@/components/ConvertKitForm'
 import Sidebar from '@/components/Sidebar'
 import getContentsByUserId from '@/actions/getContentsByUserId'
+import PostContent from '@/components/PostContent'
+import { subscribe } from 'diagnostics_channel'
 
 // const metadata = await buildMetadata()
 
@@ -69,6 +71,7 @@ export async function generateMetadata({
 
   return {
     title: articleMetadata.title,
+    // subscrive: articleMetadata.subscrive,
     description: articleMetadata.blurb,
     twitter: {
       card: 'summary_large_image',
@@ -100,6 +103,7 @@ export async function generateMetadata({
     },
   }
 }
+
 
 const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
   const articleId = params.articleId
@@ -165,21 +169,39 @@ const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
   // )
   // imageUrl.searchParams.set('title', encodeURIComponent(articleMetadata.title))
 
-
   const userContents = await getContentsByUserId()
 
   return (
     <>
-      <div className='lg:flex'>
-        <div className=''>
-          <Sidebar contents={userContents} />
-        </div>
-        <Article article={articleMetadata} author={author}>
-          {content}
-        </Article>
-      </div>
-      <AuthorCardLeft author={author} />
-      <ConvertKitForm formId="4897384" />
+      {articleMetadata.subscrive && (
+        <PostContent>
+          <div className='lg:flex'>
+            <div className=''>
+              <Sidebar contents={userContents} />
+
+            </div>
+            <Article article={articleMetadata} author={author}>
+              {content}
+            </Article>
+          </div>
+          <AuthorCardLeft author={author} />
+          <ConvertKitForm formId="4897384" />
+        </PostContent>
+      )}
+      {!articleMetadata.subscrive && (
+        <>
+          <div className='lg:flex'>
+            <div className=''>
+              <Sidebar contents={userContents} />
+            </div>
+            <Article article={articleMetadata} author={author}>
+              {content}
+            </Article>
+          </div>
+          <AuthorCardLeft author={author} />
+          <ConvertKitForm formId="4897384" />
+        </>
+      )}
     </>
   )
 }

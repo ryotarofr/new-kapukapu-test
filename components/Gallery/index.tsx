@@ -34,6 +34,7 @@ const Gallery = ({
           articleDir={article.articleDir}
           readTime={article.readTime}
           blurb={article.blurb}
+          subscrive={article.subscrive}
         />
       )
     })

@@ -9,6 +9,7 @@ export interface CardDetails {
   readTime: string
   tags: string[]
   articleDir: string
+  subscrive: boolean
 }
 
 export { default as SmallCard } from './Small'

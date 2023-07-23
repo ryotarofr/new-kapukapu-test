@@ -105,6 +105,7 @@ export function getArticleMatter(article_dir: string): ArticleMetadata {
     readTime: readingTime(file.content).text,
     indexPath: `/articles/${article_dir}/index.mdx`,
     articleDir: article_dir,
+    subscrive: file.data.subscrive,
   }
 }
 
@@ -144,6 +145,7 @@ export async function getArticleMetadata(
     readTime: readingTime(file.content).text,
     indexPath: `/articles/${article_dir}/index.mdx`,
     articleDir: article_dir,
+    subscrive: file.data.subscrive,
   }
 }
 
@@ -164,4 +166,5 @@ export interface ArticleMetadata {
   editedDate: string
   title: string
   blurb: string
+  subscrive: boolean
 }

@@ -62,6 +62,7 @@ const Modal: FC<ModalProps> = ({
               text-center 
               font-bold 
               mb-4
+              text-white
         "
           >
             {title}
@@ -72,6 +73,7 @@ const Modal: FC<ModalProps> = ({
               text-sm 
               leading-normal 
               text-center
+              text-white
         ">
             {description}
           </Dialog.Description>
