@@ -55,9 +55,8 @@ const NavigationModal = () => {
       isOpen={isOpen}
       onChange={onChange}
     >
-      <Header>
-        {/* childrenが必要にしてるから */}
-      </Header>
+      <Header />
+
       <div className="flex flex-col gap-y-4 px-5 py-4">
         {routes.map((item) => (
           <SidebarItem

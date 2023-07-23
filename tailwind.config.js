@@ -92,7 +92,7 @@ module.exports = {
       screens: {
         sm: "518px",
         md: "959px",
-        lg:"1280px",
+        lg:"1350px",
       },
     },
   },

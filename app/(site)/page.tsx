@@ -82,10 +82,8 @@ export default async function Home() {
         </div>
         <Gallery articles={articles} />
       </div>
-      <div className="col-span-3">
-        <Header>
-          {/* あとでHeaderのchildrenなしに変更 */}
-        </Header>
+      <div className="col-span-3 invisible md:visible">
+        <Header />
       </div>
     </div>
   )

@@ -23,7 +23,7 @@ const ThemeButton = () => {
     >
       <FontAwesomeIcon
         icon={faCircle}
-        className="fa-stack-2x dark:text-white text-black"
+        className="fa-stack-1x md:fa-stack-2x dark:text-white text-black"
       />
       {/* <FontAwesomeIcon icon={faLightbulbSlash} className="fa-stack-1x" /> */}
       <MdDarkMode className="fa-stack-1x text-white dark:text-black" />
@@ -41,7 +41,7 @@ const ThemeButton = () => {
     >
       <FontAwesomeIcon
         icon={faCircle}
-        className="fa-stack-2x dark:text-white text-black"
+        className="fa-stack-1x md:fa-stack-2x dark:text-white text-black"
       />
       {/* <FontAwesomeIcon icon={faLightbulbOn} className="fa-stack-1x" /> */}
       <BiSolidSun className="fa-stack-1x text-white dark:text-black" />
@@ -59,7 +59,7 @@ const ThemeButton = () => {
     >
       <FontAwesomeIcon
         icon={faCircle}
-        className="fa-stack-2x dark:text-white opacity-100 text-black"
+        className="fa-stack-1x md:fa-stack-2x dark:text-white opacity-100 text-black"
       />
       {/* <FontAwesomeIcon icon={faCogs} className="fa-stack-1x" /> */}
       <IoMdSettings className="fa-stack-1x text-white dark:text-black" />
@@ -76,8 +76,8 @@ const ThemeButton = () => {
   }
 
   return (
-    <div className="z-50">
-      <div className="pr-5 pt-5 pl-10 pb-10 animate duration-300 group flex-col flex gap-4 items-center text-white dark:text-black">
+    <div className="">
+      <div className=" absolute md:relative top-[76px] md:top-[4px] animate duration-300 group flex-col flex gap-4 items-center text-white dark:text-black">
         <div className="">
           <div
             className="w-full h-full animate duration-300"
@@ -100,10 +100,10 @@ const ThemeButton = () => {
           >
             <FontAwesomeIcon
               icon={faCircle}
-              className="fa-stack-2x dark:text-white text-black"
+              className="invisible md:visible fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faLightbulbSlash} className="fa-stack-1x" /> */}
-            <MdDarkMode className="fa-stack-1x text-white dark:text-black" />
+            <MdDarkMode className="invisible md:visible fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
 
@@ -115,10 +115,10 @@ const ThemeButton = () => {
           >
             <FontAwesomeIcon
               icon={faCircle}
-              className="fa-stack-2x dark:text-white text-black"
+              className="invisible md:visible fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faLightbulbOn} className="fa-stack-1x" /> */}
-            <BiSolidSun className="fa-stack-1x text-white dark:text-black" />
+            <BiSolidSun className="invisible md:visible fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
 
@@ -130,10 +130,10 @@ const ThemeButton = () => {
           >
             <FontAwesomeIcon
               icon={faCircle}
-              className="fa-stack-2x dark:text-white text-black"
+              className="invisible md:visible fa-stack-2x dark:text-white text-black"
             />
             {/* <FontAwesomeIcon icon={faCogs} className="fa-stack-1x" /> */}
-            <IoMdSettings className="fa-stack-1x text-white dark:text-black" />
+            <IoMdSettings className="invisible md:visible fa-stack-1x text-white dark:text-black" />
           </div>
         </div>
       </div>

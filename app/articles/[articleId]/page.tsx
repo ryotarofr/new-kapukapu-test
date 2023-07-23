@@ -30,6 +30,8 @@ import { components } from '@/components/MDXWrapper/components'
 import Article from '@/components/Article'
 import AuthorCardLeft from '@/components/AuthorCardLeft'
 import ConvertKitForm from '@/components/ConvertKitForm'
+import Sidebar from '@/components/Sidebar'
+import getContentsByUserId from '@/actions/getContentsByUserId'
 
 // const metadata = await buildMetadata()
 
@@ -163,11 +165,19 @@ const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
   // )
   // imageUrl.searchParams.set('title', encodeURIComponent(articleMetadata.title))
 
+
+  const userContents = await getContentsByUserId()
+
   return (
     <>
-      <Article article={articleMetadata} author={author}>
-        {content}
-      </Article>
+      <div className='lg:flex'>
+        <div className=''>
+          <Sidebar contents={userContents} />
+        </div>
+        <Article article={articleMetadata} author={author}>
+          {content}
+        </Article>
+      </div>
       <AuthorCardLeft author={author} />
       <ConvertKitForm formId="4897384" />
     </>

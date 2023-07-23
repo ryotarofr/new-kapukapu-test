@@ -37,7 +37,7 @@ const PostPage = (props: any) => {
             </div>
 
             <article
-              className="prose prose-cyan prose-h2:text-indigo-100 prose-h3:text-indigo-100 prose-p:text-indigo-50 text-white"
+              className="mx-auto max-w-4xl prose prose-cyan prose-h2:text-indigo-100 prose-h3:text-indigo-100 prose-p:text-indigo-50 text-white"
             >
               <Markdown>{post.content}</Markdown>
             </article>
@@ -48,12 +48,12 @@ const PostPage = (props: any) => {
       {!post.data.subrcrive && (
         <div>
           <div className="my-12 text-center">
-            <h1 className="text-2xl dark:text-slate-600 ">{post.data.title}</h1>
-            <p className="dark:text-slate-400 mt-2">{post.data.date}</p>
+            <h1 className="text-2xl text-slate-700 dark:text-slate-300 ">{post.data.title}</h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-2">{post.data.date}</p>
           </div>
 
           <article
-            className="prose prose-cyan prose-h2:text-indigo-100 prose-h3:text-indigo-100 prose-p:text-indigo-50 text-white"
+            className="mx-auto max-w-4xl prose prose-rose dark:prose-cyan prose-h2:text-indigo-800 prose-h1:text-indigo-950 dark:prose-h2:text-indigo-100 dark:prose-h3:text-indigo-100 prose-h3:text-indigo-800 prose-p:text-slate-900 dark:prose-p:text-indigo-50 text-slate-900 dark:text-white"
           >
             <Markdown>{post.content}</Markdown>
           </article>

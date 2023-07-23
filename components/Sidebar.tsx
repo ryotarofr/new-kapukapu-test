@@ -89,7 +89,7 @@ const Sidebar: FC<SidebarProps> = ({ contents }) => {
 
       {/* display medium/small */}
       <div className="
-        md:hidden h-min
+        md:hidden
       ">
         <HeaderTabAndMob />
       </div>

@@ -16,11 +16,11 @@ import { ThemeButton } from "./Theme";
 
 
 interface HeaderProps {
-  children: ReactNode,
+  // children: ReactNode,
   className?: string,
 }
 
-const Header: FC<HeaderProps> = ({ children, className }) => {
+const Header: FC<HeaderProps> = ({ className }) => {
   const player = usePlayer()
   const authModal = useAuthModal()
   const router = useRouter()
@@ -92,8 +92,10 @@ const Header: FC<HeaderProps> = ({ children, className }) => {
           </div>
         </div>
       </div>
-      {children}
-      <ThemeButton />
+      {/* {children} */}
+      <div className=" invisible md:visible">
+        <ThemeButton />
+      </div>
     </div>
   )
 }
