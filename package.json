@@ -13,7 +13,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@netlify/plugin-nextjs": "^4.29.5",
     "@octokit/core": "^4.2.4",
     "@octokit/types": "^10.0.0",
     "@radix-ui/react-dialog": "^1.0.4",
@@ -67,6 +66,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.29.5-appdir.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/d3": "^7.4.0",
     "@types/js-yaml": "^4.0.5",
