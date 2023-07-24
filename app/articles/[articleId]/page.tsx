@@ -36,7 +36,7 @@ import PostContent from '@/components/PostContent'
 import { subscribe } from 'diagnostics_channel'
 
 // const metadata = await buildMetadata()
-
+export const dynamic = 'force-static'
 
 export async function generateMetadata({
   params,
