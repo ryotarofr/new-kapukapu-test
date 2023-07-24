@@ -1,11 +1,13 @@
 import getLikedContents from "@/actions/getLikedContents"
 import LikedContent from './components/LikedContent';
+import Sidebar from "@/components/Sidebar";
+import getContentsByUserId from "@/actions/getContentsByUserId";
 
 export const revalidate = 0
 
 const Liked = async () => {
   const contents = await getLikedContents()
-
+  const userContents = await getContentsByUserId()
   return (
     <div
       className="
@@ -13,9 +15,14 @@ const Liked = async () => {
         h-full 
         overflow-hidden 
         overflow-y-auto
+
+        md:grid md:grid-cols-12 md:gap-8
       "
     >
-      <div className="mt-20">
+      <div className="col-span-3">
+        <Sidebar contents={userContents} />
+      </div>
+      <div className="col-span-6 mt-20">
         <div
           className="
               flex 
@@ -34,24 +41,23 @@ const Liked = async () => {
               /> */}
           {/* </div> */}
           <div className="flex flex-col gap-y-2 mt-4 md:mt-0">
-            <p className="hidden md:block font-semibold text-sm">
-              Playlist
-            </p>
             <h1
               className="
-                  text-white 
+              text-slate-800
+                  dark:text-white 
                   text-2xl 
                   sm:text-4xl 
                   lg:text-5xl 
                   font-bold
                 "
             >
-              いいねしたコンテンツ
+              {/* いいねしたコンテンツ */}
+              開発中です。今しばらくお待ちください。🙇‍♂️
             </h1>
           </div>
         </div>
       </div>
-      <LikedContent contents={contents} />
+      {/* <LikedContent contents={contents} /> */}
     </div>
   )
 }

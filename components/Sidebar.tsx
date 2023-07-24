@@ -82,9 +82,9 @@ const Sidebar: FC<SidebarProps> = ({ contents }) => {
             ))}
           </div>
         </Box>
-        <Box className="overflow-y-auto h-full">
+        {/* <Box className="overflow-y-auto h-full">
           <Library contents={contents} />
-        </Box>
+        </Box> */}
       </div>
 
       {/* display medium/small */}

@@ -5,7 +5,7 @@ import Sidebar from '@/components/Sidebar'
 import getContentsByUserId from '@/actions/getContentsByUserId'
 
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface SearchProps {
   searchParams: { title: string }
@@ -32,10 +32,11 @@ const Search = async ({ searchParams }: SearchProps) => {
       </div>
       <div className="col-span-6 my-4">
         <h1 className="text-neutral-800 dark:text-white text-3xl font-semibold">
-          検索
+          {/* 検索 */}
+          開発中です。今しばらくお待ちください。🙇‍♂️
         </h1>
         <SearchInput />
-        <SearchContent contents={contents} />
+        {/* <SearchContent contents={contents} /> */}
       </div>
     </div>
   );

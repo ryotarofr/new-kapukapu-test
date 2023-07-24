@@ -8,17 +8,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import Logo from './blog-logo.svg'
+import Logo2 from './logo2.png'
 import { AiFillCopyrightCircle } from 'react-icons/ai'
 
 const navigation = {
-  affiliates: [{ name: 'Blogroll', href: 'https://blogroll.org/' }],
+  affiliates: [
+    { name: 'アフィリエイトリンク貼るかもしれません', href: 'add' }
+    // { name: 'Blogroll', href: 'https://blogroll.org/' }
+  ],
   friends: [
-    { name: 'Hugo', href: 'https://hugo.md' },
-    { name: 'Terence', href: 'https://terencehuynh.com/' },
-    { name: 'Nicholas', href: 'https://nicholas.cloud/' },
-    { name: 'Eric', href: 'https://ericjiang.dev/' },
-    { name: 'Daniel', href: 'https://daniel.st/' },
-    { name: 'Matt', href: 'https://mattseymour.substack.com/' },
+    { name: "other", href: "testfriend" }
+    // { name: 'Hugo', href: 'https://hugo.md' },
+    // { name: 'Terence', href: 'https://terencehuynh.com/' },
+    // { name: 'Nicholas', href: 'https://nicholas.cloud/' },
+    // { name: 'Eric', href: 'https://ericjiang.dev/' },
+    // { name: 'Daniel', href: 'https://daniel.st/' },
+    // { name: 'Matt', href: 'https://mattseymour.substack.com/' },
   ],
   links: [
     { name: 'Me', href: 'https://me.kochie.io' },
@@ -63,7 +68,7 @@ export function Footer({ title, description }: FooterProps) {
         <div className="mt-16 border-t border-black/20 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24" />
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <Image className="" src={Logo} alt="Company name" />
+            <Image className="w-[50px] h-[50px] rounded-full" src={Logo2} alt="Company name" />
             <p className="text-sm leading-6 text-gray-800 dark:text-gray-300">{description}</p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
@@ -78,7 +83,7 @@ export function Footer({ title, description }: FooterProps) {
               ))}
             </div>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+          <div className="grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div className="mt-10 md:mt-0 md:col-start-2">
                 <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
@@ -101,7 +106,7 @@ export function Footer({ title, description }: FooterProps) {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
-                  Friends
+                  Friends（仲間募集中）
                 </h3>
                 <ul role="list" className="mt-6 space-y-3">
                   {navigation.friends.map((item) => (
@@ -116,7 +121,7 @@ export function Footer({ title, description }: FooterProps) {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              {/* <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold leading-6 text-gray-600 dark:text-white">
                   Links
                 </h3>
@@ -132,7 +137,7 @@ export function Footer({ title, description }: FooterProps) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -184,8 +184,8 @@ const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
               {content}
             </Article>
           </div>
-          <AuthorCardLeft author={author} />
-          <ConvertKitForm formId="4897384" />
+          {/* <AuthorCardLeft author={author} /> */}
+          {/* <ConvertKitForm formId="4897384" /> */}
         </PostContent>
       )}
       {!articleMetadata.subscrive && (
@@ -198,8 +198,8 @@ const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
               {content}
             </Article>
           </div>
-          <AuthorCardLeft author={author} />
-          <ConvertKitForm formId="4897384" />
+          {/* <AuthorCardLeft author={author} /> */}
+          {/* <ConvertKitForm formId="4897384" /> */}
         </>
       )}
     </>

@@ -32,7 +32,7 @@ const lato = Lato({
 })
 
 const description =
-  'My blog about software engineering, programming, and technology. I write about stuff I see around the internet.'
+  'このサイトはテック系の情報発信をしていきます。'
 
 
 export default async function RootLayout({
