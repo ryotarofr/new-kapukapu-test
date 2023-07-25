@@ -65,7 +65,6 @@ export const AnserWrongSSR = () => {
         className="bg-red-500"
       >
         <div className="mx-4">SSG</div>
-
       </QuestButton>
       <QuestButton
         className="bg-slate-300"
