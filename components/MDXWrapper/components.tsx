@@ -135,7 +135,7 @@ const IMG = ({
     )
   } else {
     image = (
-      <div className="relative w-full h-auto rounded-t-xl overflow-hidden">
+      <div className=" dark:bg-slate-200 relative w-full h-auto rounded-t-xl overflow-hidden">
         <Image
           src={src || ''}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
