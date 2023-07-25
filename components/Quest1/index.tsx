@@ -151,7 +151,7 @@ export const Quest1_3 = () => {
 }
 
 
-// Ans === SSG
+// Ans === SSR
 export const Quest1_4 = () => {
   const ssgorssr = useSSGorSSR()
 
@@ -170,11 +170,11 @@ export const Quest1_4 = () => {
         <>
           {ssgorssr.isSSG4 ?
             <>
-              <AnserCorrectSSG />
+              <AnserWrongSSR />
             </>
             :
             <>
-              <AnserWrongSSG />
+              <AnserCorrectSSR />
             </>
           }
         </>
@@ -200,7 +200,7 @@ export const Quest1_4 = () => {
 }
 
 
-// Ans === SSR
+// Ans === SSG
 export const Quest1_5 = () => {
   const ssgorssr = useSSGorSSR()
 
@@ -219,11 +219,11 @@ export const Quest1_5 = () => {
         <>
           {ssgorssr.isSSG5 ?
             <>
-              <AnserWrongSSR />
+              <AnserCorrectSSG />
             </>
             :
             <>
-              <AnserCorrectSSR />
+              <AnserWrongSSG />
             </>
           }
         </>
