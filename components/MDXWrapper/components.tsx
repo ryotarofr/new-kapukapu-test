@@ -11,6 +11,8 @@ import CodeBlock from '@/components/CodeBlocks'
 import GithubProject from '@/components/GithubProject'
 import Quote from '@/components/Quote'
 import HaloInteractive from '@/components/Canvasses/ring-spinner'
+import { Quest1_1, Quest1_2, Quest1_3, Quest1_4, Quest1_5, Quest1_6, } from '@/components/Quest1'
+import { AnserButton } from '@/components/Quest1/Anser'
 
 type PropsOnlyChildren = {
   children?: ReactNode
@@ -244,6 +246,13 @@ export const components = {
   ul: UL,
   li: LI,
   HaloInteractive,
+  Quest1_1,
+  Quest1_2,
+  Quest1_3,
+  Quest1_4,
+  Quest1_5,
+  Quest1_6,
+  AnserButton,
   iframe: Iframe,
   GithubProject,
   blockquote: BLOCKQUOTE,
