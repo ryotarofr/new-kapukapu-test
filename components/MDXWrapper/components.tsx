@@ -46,7 +46,7 @@ const H1 = ({
   children,
   id,
 }: PropsWithChildren<HeadingProps>): ReactElement => (
-  <h1 className="text-5xl my-8" style={{ scrollMarginTop: '50px' }} id={id}>
+  <h1 className="text-4xl my-8" style={{ scrollMarginTop: '50px' }} id={id}>
     {children}
   </h1>
 )
@@ -208,7 +208,7 @@ const CODE = ({ children }: PropsWithChildren<Record<never, never>>) => (
 )
 
 const OL = ({ children, id }: PropsWithChildren<{ id?: string }>) => (
-  <ol id={id} className="list-decimal list-outside px-12">
+  <ol id={id} className="list-decimal list-outside px-4">
     {children}
   </ol>
 )
