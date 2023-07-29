@@ -99,6 +99,28 @@ export interface Database {
           }
         ]
       }
+      likes: {
+        Row: {
+          postId: number
+          user_id: string
+        }
+        Insert: {
+          postId?: number
+          user_id: string
+        }
+        Update: {
+          postId?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "likes_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       prices: {
         Row: {
           active: boolean | null

@@ -15,7 +15,9 @@ const AccountContent = () => {
   const subscriveModal = useSubscribeModal()
   const { isLoading, subscription, user } = useUser()
 
+
   const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     if (!isLoading && !user) {

@@ -1,0 +1,591 @@
+---
+title: 
+  ゼロからNestJsのapi開発の基礎学習基盤作りは3日で十分です。(震え🥺)
+blurb: 
+  これは自分への共戦でもあります。温かい目で見てもらえると嬉しいです。
+author: kochie
+jumbotron:
+  src: image.png
+  alt: New world City in the sky with rocket
+publishedDate: 2023-07-29T12:00:00+12:00
+---
+
+
+1日目：チュートリアルのtodoアプリを作る（今ここ）
+
+2日目：明日の自分が考える(適当で御免なさい)
+
+3日目：明後日の自分が考える
+
+
+
+よく勘違いがあるので念を押します。
+
+**`Next.js`でも`Nuxt.js`でもなく`NestJs`です**😆
+
+
+
+このblogでは私がnestJsの習得過程でやったことを記録していきます。
+
+#### 基礎を網羅できる優秀なサイト
+
+- [todoアプリを作ってるサイト](https://zenn.dev/mikakane/books/nestjs-tutorial/viewer)(参考にさせて頂きました)
+- [ライフサイクルについて](https://zenn.dev/kisihara_c/books/nest-officialdoc-jp/viewer/fundamentals-lifecycleevents)
+
+
+
+### nestJs cli インストール
+
+ますはnestJsをPCで使うために cli をインストールします。
+
+```
+$ npm i -g @nestjs/cli
+```
+
+```
+$ yarn global add @nestjs/cli
+```
+
+
+
+## todoアプリを作っていく
+
+#### 大まかなデータベースの作り方(＊自己流です)
+
+今回はtodoタスクを作るのでその流れで説明します。
+
+1. タスクのデータを作って`PrismaClient`へ送る
+2. `NestJs`でデータ呼び出し用のファイルを作る・・・このファイルを今回は「サービス」と呼びます。
+3. コントローラーでサービスのメソッドを指定する
+4. サービスをアプリケーション全体に拡張する
+
+大体こんな感じです。
+
+
+
+### 実際にコードを書いていきます
+
+データベースを作る
+
+今回は`Prisma`を使います。(NestJsメインなのでp`Prisma`の説明はしていません)
+
+[`Prisma`の公式サイトです](https://www.prisma.io/)
+
+##### `Prisma`のインストール
+
+```
+$ npm i prisma
+```
+
+`Prisma`の初期ファイルを用意
+
+```
+$ npx prisma init
+```
+
+このコマンドを実行することで以下の処理が実行されます。
+
+- `.env` ファイルの追加
+- `prisma/schema.prisma` の生成
+
+ファイルの生成が確認できたら、生成された `.env` に Database の接続情報を記述していきます。
+
+```bash
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+```
+
+ここまでで、Prisma を用いて Database に接続する準備は完了です。
+
+
+
+### PostgresSQL
+
+PrismaでPostGresSQLを使うので
+
+- ユーザー名
+- パスワード
+
+が必要になります。
+
+今回は psql のターミナルを使います。以下のサイトからダウンロードできます。
+
+[postgresSQLダウンロード]: https://www.postgresql.jp/download
+
+
+
+データベースの作成
+
+`nestJsTutrial`というデータベースを作ります
+
+```
+postgres=# CREATE DATABASE nestJsTutrial;
+```
+
+```
+CREATE DATABASE
+```
+
+
+
+データベースに接続
+
+```
+postgres=# \c nestjstutrial
+```
+
+```
+You are now connected to database "nestjstutrial" as user "postgres".
+nestjstutrial=# 
+```
+
+
+
+データベースが作成できているか確認してみましょう！
+
+```
+postgres=# \l
+```
+
+```
+                                    List of databases
+     Name      |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+---------------+----------+----------+-------------+-------------+-----------------------
+ diary_report  | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | 
+ nestjstutrial | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | 
+ postgres      | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | 
+ private_diary | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | 
+ template0     | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | =c/postgres          +
+               |          |          |             |             | postgres=CTc/postgres
+ template1     | postgres | UTF8     | ja_JP.UTF-8 | ja_JP.UTF-8 | =c/postgres          +
+               |          |          |             |             | postgres=CTc/postgres
+```
+
+`nestjstutrial`があることが確認できます。
+
+
+
+### `Prisma`でデータベース作成
+
+データデーブル作成
+
+```sql
+model Task {
+  id    Int     @id @default(autoincrement())
+  title String  @unique
+  due_on  DateTime? 
+  is_done Boolean  @default(false)
+}
+```
+
+
+
+このコマンドでデーブルを生成します
+
+```
+$ npx prisma migrate dev --name todo
+```
+
+
+
+### `NestJs`のコードを書いていきます
+
+Src/prisma/prisma.service.ts
+
+```typescript
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+
+@Injectable()
+export class PrismaService extends PrismaClient implements OnModuleInit {
+  async onModuleInit() {
+    await this.$connect();
+  }
+}
+```
+
+`OnModuleInit`インターフェースを実装することで、`PrismaService`クラスは`onModuleInit`メソッドを持ち、NestJSのライフサイクルフックである`onModuleInit`と連携します。`onModuleInit`メソッドは、NestJSのモジュールが初期化された後に自動的に呼び出されます。
+
+`onModuleInit`メソッド内では、`$connect`メソッドが呼び出されています。これにより、`PrismaClient`がデータベースに接続し、アプリケーションが起動する前にデータベースとの接続が確立されます。
+
+
+
+Src/todo/todo.controller.ts
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+@Controller('todo') // コントローラクラスの宣言とパスの指定
+export class TodoController {
+
+  constructor( //説明①
+    private prisma: PrismaService
+  ) { }
+
+  @Get("list") // HTTP メソドとパスの指定
+  async getList() { //説明②
+    const result = await this.prisma.task.findMany()
+    return [
+      ...result
+    ]
+  }
+}
+```
+
+**説明①**
+
+NestJSでは、依存性注入（Dependency Injection, DI）がサポートされており、コンポーネント（サービスやコントローラーなど）の依存関係を自動的に解決できます。このコンストラクタの引数である`private prisma: PrismaService`は、DIによって`PrismaService`のインスタンスが自動的に注入されることを意味します。
+
+具体的に説明すると:
+
+1. `private prisma: PrismaService`は、コンストラクタの引数として`prisma`という変数を定義しています。`private`修飾子を付けることで、この変数はクラス内でのみアクセス可能なプライベートメンバーとなります。
+2. `PrismaService`は、先ほど定義した`PrismaService`クラスの型です。この型情報により、DIシステムがどのサービスを注入すべきかを識別します。
+3. コンストラクタの中では、`this.prisma`を使って`PrismaService`のメソッドにアクセスできます。DIによって、`PrismaService`のインスタンスが自動的に`prisma`変数に割り当てられるので、`this.prisma`を使って`PrismaService`のメソッドを呼び出すことができます。
+
+このように、コンストラクタの引数にサービスクラスを定義することで、そのクラスのインスタンスが自動的に注入され、クラス内で利用できるようになります。これにより、コントローラー内でPrismaServiceの機能を使用できるようになります。
+
+
+
+**説明②**
+
+1. `@Get("list")`デコレータは、このメソッドがHTTP GETリクエストを処理することを示しています。具体的には、`/todo/list`エンドポイントに対応しています。
+2. `async getList()`メソッドは、タスクのリストを取得してクライアントに返すための処理を行っています。
+3. `await this.prisma.task.findMany()`は、`PrismaService`の`task`モデル（テーブル）から全てのタスクを取得するためにPrismaの`findMany()`メソッドを使っています。この部分でデータベースからタスクのリストを非同期に取得しています。
+4. `return [...result]`は、取得したタスクリストを配列としてクライアントに返しています。ここでは必要に応じてデータを変換して返すこともできます。
+
+
+
+このように、`TodoController`は`PrismaService`を使用してデータベースからタスクのリストを取得し、それをクライアントに返すシンプルなRESTエンドポイントを提供しています。
+
+
+
+### Postメソッドの作成
+
+タスクを追加していくために`Post`ルートを作成していきます。
+
+`src/todo/create-task.dto.ts`
+
+```typescript
+// `POST` `/todo` が受け取るリクエストの定義
+export class CreateTaskDto {
+  title: string;
+}
+```
+
+
+
+タスクを追加するための処理をコントローラーに追加します。
+
+`src/todo/todo.controller.ts`
+
+```typescript
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateTaskDto } from './create-task.dto';
+
+@Controller('todo')
+export class TodoController {
+  // ... 
+  @Post("")
+  async add(@Body() task:CreateTaskDto) { 
+    const result = await this.prisma.task.create({
+      data: task
+    })
+    return {
+      status : "OK"
+    }
+  }
+}
+```
+
+ぱっと見でなんとなくわかるかと思いますが、以下にコードの説明を載せておきます。
+
+1. `@Controller('todo')`デコレータは、このコントローラーが`/todo`エンドポイントに関連付けられることを示しています。つまり、このコントローラーが`/todo`エンドポイントに対応しているということです。
+
+2. `@Post("")`デコレータは、このメソッドがHTTP POSTリクエストを処理することを示しています。具体的には、`/todo`エンドポイントに対応しています。
+
+3. `async add(@Body() task: CreateTaskDto)`メソッドは、新しいタスクを作成するための処理を行っています。`@Body()`デコレータによって、HTTPリクエストのボディに含まれるデータが`task`変数にバインドされます。
+
+4. `CreateTaskDto`は、`TodoController`クラスと同じディレクトリにある`create-task.dto.ts`ファイルで定義されたデータ転送オブジェクト（DTO）です。これにより、リクエストのボディから受け取ったデータを検証し、型安全な方法で取り扱うことができます。
+
+5. `await this.prisma.task.create({ data: task })`は、`PrismaService`の`task`モデル（テーブル）に新しいタスクを作成するためにPrismaの`create()`メソッドを使っています。`task`変数には、リクエストのボディから受け取った新しいタスクの情報が含まれています。
+
+6. `return { status: "OK" }`は、新しいタスクの作成が成功したことをクライアントに通知するために、簡単なJSONオブジェクトを返しています。実際のアプリケーションでは、作成したタスクの情報や他の適切なレスポンスを返すことが一般的です。
+
+このように、`TodoController`は`PrismaService`を使用して新しいタスクをデータベースに作成するRESTエンドポイントを提供しています。クライアントはHTTP POSTリクエストを送信し、タスクの情報をリクエストボディに含めることで新しいタスクを作成することができます。
+
+
+
+#### 実際にタスクが追加できるか確認していきます。
+
+私はVSCode拡張機能のThunder Clientを使って確認します。
+
+![](/Users/ryotarofujii/Desktop/new-kapukapu-test/articles/97NestJs-tutrial/Thunder Client.png)
+
+
+
+`Post`メソッドを`http://localhost:3000/todo`を指定してに`send`でリクエストを送信します。
+`JSON`フィールドに以下のようにテキストを入力します。
+
+![](/post-req.png?width=1600&height=2080)
+
+追加できているか確認
+
+![](/get-task.png?width=1600&height=2080)
+
+`title`:`test`をいうタスクが追加されていますね。
+
+
+
+### バリデーションを追加
+
+空のデータを送るとエラーが出ます
+
+
+
+
+
+このエラーを回避するためにバリデーション機能を実装していきます。
+
+```
+$ npm i --save class-validator class-transformer
+```
+
+
+
+`src/main.ts` に、 import 文と `app.useGlobalPipes` の記述を追加し、アプリケーションでバリデーションの機能を有効にできます
+
+```typescript
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      //options here
+    }),
+  );
+
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+
+
+ `@IsNotEmpty()`でタイトルの表示を必須にできます。
+
+```typescript
+import {IsNotEmpty} from "class-validator"
+
+export class CreateTaskDto {
+  @IsNotEmpty()
+  title: string;
+}
+```
+
+
+
+実際に空のデータを送信して、500 のエラーではなくステータスコードの 400 が受け取れることを確認しておきましょう。
+
+![](/404.png?width=1600&height=2080)
+
+
+
+### `Update`メソッド作成
+
+完了したタスクを`list`から削除します。
+
+`scr/todo/todo.controller.ts`
+
+```typescript
+// Param の追加
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+// ...
+@Controller('todo')
+export class TodoController {
+  // ...
+  @Post(":id/done")
+  async done(@Param() param) {
+    await this.prisma.task.update({
+      data: {
+        is_done: true
+      },
+      where: {　//説明①
+        id: parseInt(param.id)
+      }
+    })
+    return {
+      status : "OK"
+    }
+  }
+}
+```
+
+このエンドポイントは、HTTP POSTリクエストを受け取り、指定されたIDのタスクの状態を完了（`is_done: true`）に更新する役割を持ちます。
+
+具体的に説明すると:
+
+1. `@Post(":id/done")`デコレータは、このメソッドがHTTP POSTリクエストを処理することを示しています。`:id`はプレースホルダーであり、実際のリクエストURLで指定されるタスクのIDを表します。`:done`はエンドポイントの一部であり、この部分がリクエストURLに含まれる必要があります。例えば、`/todo/1/done`というURLが指定された場合、IDが`1`のタスクの完了状態を更新することになります。
+
+2. `async done(@Param() param)`メソッドは、指定されたIDのタスクを完了状態に更新するための処理を行っています。`@Param()`デコレータは、リクエストURLのパラメータを受け取るために使用されます。ここでは、`param`変数にリクエストURLから受け取ったパラメータが含まれます。
+
+3. `await this.prisma.task.update({ ... })`は、`PrismaService`の`task`モデル（テーブル）に対してタスクの更新を行うためにPrismaの`update()`メソッドを使用しています。`data`オブジェクトには、更新したいタスクの属性が含まれており、ここでは`is_done: true`を指定してタスクを完了状態にします。`where`オブジェクトには、更新対象のタスクを特定するための条件を指定しています。この場合、`id`がリクエストから受け取ったパラメータ（`param.id`）と一致するタスクが更新されます。
+
+4. `return { status: "OK" }`は、タスクの更新が成功したことをクライアントに通知するために、簡単なJSONオブジェクトを返しています。
+
+このように、`TodoController`は`PrismaService`を使用して特定のIDのタスクを完了状態に更新するRESTエンドポイントを提供しています。クライアントはHTTP POSTリクエストを送信し、URLに対応するタスクのIDを指定することでタスクの完了状態を更新できます。
+
+
+
+**説明**①
+
+​	update の際の where では、数値で id を指定する必要がありますが、通常 `@Param` 経由で渡される値は文字列として解釈されます。
+ここでは型エラーを防ぐために parseInt を使って数値へのキャストを行なって実装しています。
+
+コードが記述できたら、動作確認を進めましょう。URL で指定した id のタスクの `is_done` 列が変化すれば動作として問題ありません。
+
+
+
+`task/list` のルートも以下のような形で where 条件を追加して、false のみを表示するようにすれば`list`から指定した`id`が除外されます。
+
+```typescript
+//...
+@Controller('todo')
+export class TodoController {
+  //...
+  @Get("list")
+  async getList() { 
+    const result = await this.prisma.task.findMany({
+      where: {
+        is_done: false
+      }
+    })
+    return [ 
+      ...result
+    ]  
+  }
+}
+```
+
+
+
+先ほど追加した`"title":"test`を更新してみましょう
+
+![](/update1.png?width=1600&height=2080)
+
+
+
+`list`データの配列から削除されているかの確認もしてみましょう
+
+![](/update2.png?width=1600&height=2080)
+
+期待通りの挙動ができています。
+
+
+
+
+
+### バリデーション追加
+
+今回の実装では、URL から渡された ID 値を parseInt で処理したため、ID の箇所に文字列が入るリクエスト、例えば `task/hoge/done` のようなアクセスでエラーが発生してしまいます。
+
+![](/hoge.png?width=1600&height=2080)
+
+
+
+
+
+このようなリクエストを正しく処理するために、URL 上のパラメータについてもバリデーションの実装が必要になります。
+
+`src/todo/update-task.dto.ts`
+
+```typescript
+import {IsNotEmpty,IsInt} from "class-validator"
+
+export class UpdateTaskDto {
+  @IsNotEmpty()
+  @IsInt()
+  id: number;
+}
+```
+
+`@IsInt()`デコレータは、`id`プロパティが整数であることを確認します。つまり、`id`が整数値でない場合はエラーが発生します。
+
+
+
+
+
+`src/todo/todo.controller.ts`
+
+変更前
+
+```typescript
+//...
+import { UpdateTaskDto } from './update-task.dto';
+
+@Controller('todo')
+export class TodoController {
+  // ...
+@Post(":id/done")
+  async done(@Param() param) {
+    await this.prisma.task.update({
+      data: {
+        is_done: true
+      },
+      where: {
+        id: parseInt(param.id)
+      }
+    })
+    return {
+      status: "OK"
+    }
+  }
+}
+```
+
+
+
+変更後
+
+```typescript
+//...
+import { UpdateTaskDto } from './update-task.dto';
+
+@Controller('todo')
+export class TodoController {
+  // ...
+  @Post(":id/done")
+  async done(@Param() param:UpdateTaskDto) {
+    await this.prisma.task.updateMany({
+      data: {
+        is_done: true
+      },
+      where: {
+        id: param.id
+      } 
+    })
+    return {
+      status : "OK"
+    }
+  }
+}
+```
+
+バリデーションの適応ができました。
+
+`param.id` はparseInt 無しでそのまま id 値として利用することができ、リクエストの際に 文字列が来た場合に正しくエラーを表示することができるようになります。
+
+
+
+以上でtodoアプリのチュートリアルは終了します。

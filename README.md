@@ -44,6 +44,9 @@ contentsのbucket
 Supabase types,sql commands(https://supabase.com/docs/guides/api/rest/generating-types)
  これ:
  npx supabase gen types typescript --project-id "$PROJECT_REF" --schema public > types/supabase.ts
+
+これね：
+ npx supabase gen types typescript --project-id idwitrlwanewneoypjki --schema public > types_db.ts     
 # new-kapukapu
 # testsite
 # new-kapukapu-test
