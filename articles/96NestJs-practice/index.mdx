@@ -1,0 +1,591 @@
+---
+title: 
+  NextJsのControllerをマスターする
+blurb: 
+  昨日より実践に近い内容になっています
+author: kochie
+jumbotron:
+  src: image.png
+  alt: doge
+publishedDate: 2023-07-25T12:00:00+12:00
+---
+
+
+1日目：チュートリアルのtodoアプリを作る（7/29）
+
+2日目：Contriller, Servise, Moduleの理解(今ここ)
+
+3日目：明日の自分が考える
+
+
+### 実装するエンドポイント
+
+GET：`/report/income`
+
+GET：`/report/income/:id`
+
+POST：`/report/income`
+
+PUT：`/report/income/:id`
+
+DELETE：`/report/income/:id`
+
+
+
+### NestJs エンティティー
+
+Controller：エンドポイントの作成
+
+Modules
+
+Services
+
+Guards
+
+Data Transfer Objects
+
+
+
+
+
+### NestJsファイルルーティング
+
+クラスエクスポートのイメージ
+
+![](/module.png?width=1600&height=2080)
+
+
+
+### コードを書いていきます
+
+コントローラーにPostデコレーターを追加します。
+
+`src/app.controller.ts`
+
+```typescript
+import { Controller, Get, Post } from '@nestjs/common';
+
+@Controller()
+export class AppController {
+  @Get()
+  getReports() {
+    return []
+  }
+  @Get()
+  getReportById() {
+    return []
+  }
+}
+```
+
+
+
+##### エンドポイントを追加
+
+`src/app.controller.ts`のControllerメソッドのエンドポイントを`report/income`に変更します。
+
+`http://localhost:3000` +
+
+GET：`/report/income`
+
+GET：`/report/income/:id`
+
+POST：`/report/income`
+
+PUT：`/report/income/:id`
+
+DELETE：`/report/income/:id`
+
+のようにデコレータにエンドポイントを追加するにはどうすれば良いでしょうか？ぜひ皆さんも考えてみてください。
+
+＊ここトグルボタン実装する"8/3まで"(Fujiiが忘れてたら教えてください)
+
+```typescript
+import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+
+@Controller('report/income')
+export class AppController {
+  @Get()
+  getAllReports() {
+    return []
+  }
+  @Get(':id')
+  getReportById() {
+    return []
+  }
+
+  @Post()
+  createReport() {
+    return "Created"
+  }
+
+  @Put(':id')
+  updateReport() {
+    return "Updated"
+  }
+
+  @Delete(':id')
+  deleteReport() {
+    return "deleted"
+  }
+}
+```
+
+エンドポイントが作れました。
+
+動作の確認をしたい方は以下のエンドポイントにリクエストを送信してみてください。
+
+GET, POST： http://localhost:3000/report/income
+
+POST, DELETE：http://localhost:3000/report/income/123
+
+
+
+私はpostmanでリクエスト送信します。
+
+![](/postman.png?width=1600&height=2080)
+
+> [ポストマン](https://www.postman.com/)
+
+
+
+### データの型定義
+
+NestJsはデフォルトで TypeScript をサポートしていますので格納するデータの型定義をしていきます。
+
+TypeScriptわからないよって方はこちらの神サイトをのぞいてみてください😆
+
+[サバイバルTypeScript](https://typescriptbook.jp/)
+
+
+
+個人的な意見ですが、型ファイルとデータファイルは分けた方がわかりやすいです。
+
+また、大規模アプリなどではデータの量が増えるので型ファイルにも`〇〇.type.ts`と名前をつけることが多いです。
+
+
+
+`src/types/type.ts`
+
+```typescript
+export interface Data {
+  report: {
+    id: string
+    source: string
+    amount: number
+    created_at: Date
+    updated_at: Date
+    type: ReportType
+  }[]
+}
+
+enum ReportType {
+  INCOME = "income",
+  EXPENSE = "expense"
+}
+```
+
+
+
+`src/data/data.ts`
+
+```typescript
+import { Data, ReportType } from "src/types/type";
+
+export const data: Data = {
+  report: [
+    {　//ダミーデータを入れておきます
+      id: "uuid1",
+      source: "Salary",
+      amount: 7500,
+      created_at: new Date(),
+      updated_at: new Date(),
+      type: ReportType.INCOME
+    }
+  ]
+}
+```
+
+
+
+
+
+### データを取得
+
+#### `getAllReports`で全てのデータを取得してみましょう！
+
+まず思いつくのは、このtypeデータは2つ型を持っているので三項演算子でスマートなコードが書けそうですね。
+
+```typescript
+import { ReportType } from './types/type';
+import { data } from './data/data';
+
+@Controller('report/:type') //変更
+export class AppController {
+  @Get()
+  getAllReports(@Param('type') type: string) {
+    const reportType = type === 'income' ? ReportType.INCOME : ReportType.EXPENSE
+    }
+    return data.report.filter((report) => report.type === reportType)
+  }
+```
+
+このコードではtypeが`income`以外のリクエストを拾った場合に`expence`を出力します。
+
+
+
+今回は`expense`も厳密に取得していこうと思います。
+
+```typescript
+//...
+import { HttpException, HttpStatus } from '@nestjs/common';
+
+@Controller('report/:type')
+export class AppController {
+  @Get()
+  getAllReports(@Param('type') type: string) {
+    // const reportType = type === 'income' ? ReportType.INCOME : ReportType.EXPENSE
+    const reportType = (type: string): ReportType => {
+      switch (type) {
+        case 'income':
+          return ReportType.INCOME
+        case 'expense':
+          return ReportType.EXPENSE
+        default:
+           throw new HttpException('レポートタイプに誤りがあります。: ' + type, HttpStatus.BAD_REQUEST)
+      }
+    }
+    try {
+      const filteredReports = data.report.filter((report) => report.type === reportType(type));
+      return filteredReports;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+```
+
+case文で`income`,`expense`以外のリクエストにエラーを出すようにしました。
+
+
+
+
+
+#### 指定したidのデータを取得してみましょう！
+
+やることは同じなので皆さんも考えてみてください。
+
+- `@Param`の追加
+- `id`を`.find`関数を使い探す
+- `id`が存在しない場合にメッセージを表示する
+
+```typescript
+//...
+@Get(':id')
+  getReportById(@Param('type') type: string, @Param('id') id: string) {
+    const reportType = (type: string): ReportType => {
+      switch (type) {
+        case 'income':
+          return ReportType.INCOME
+        case 'expense':
+          return ReportType.EXPENSE
+        default:
+          throw new HttpException('レポートタイプに誤りがあります。: ' + type, HttpStatus.BAD_REQUEST);
+      }
+    }
+    const filteredReports = data.report.filter((report) => report.type === reportType(type));
+    const reportById = filteredReports.find((report) => report.id === id);
+
+    if (!reportById) {
+      throw new HttpException('利用できるデータがありません', HttpStatus.NOT_FOUND);
+    }
+    return reportById;
+  }
+
+```
+
+こんな感じです。
+
+
+
+##### エラーを`Throw`させる理由(考え方は人それぞれですが...)
+
+**私の場合**：「エラーの内容を一目で分かるようにしたい」
+
+例外処理を書かないと基本的に**500番**のエラーが返ってきます。サーバーエラーと言ったりしますが、ものによってはめちゃくちゃわかりにくいです。
+
+「いや、これぐらい分かるでしょ」
+
+って今は思うんですよ。
+
+でも1週間後の自分はすっかり忘れてるんです。
+
+ですので私は明示的に**メッセージ付きの404エラー**を返してます。
+
+
+
+#### リクエストが機能しているか確認をします
+
+##### `getAllReports`
+
+![](/all-success.png?width=1600&height=2080)
+
+![](/all-error.png?width=1600&height=2080)
+
+
+
+##### `getReportById`
+
+![](/id-success.png?width=1600&height=2080)
+
+![](/id-error.png?width=1600&height=2080)
+
+期待通りの挙動です！！
+
+
+
+
+
+### データの作成
+
+ユーザーidは`uuid`という種類のデータを扱うのでパッケージを追加します。
+
+```
+$ npm i uuid @types/uuid
+```
+
+
+
+##### `@Post`デコレータを使ってデータの作成のメソッドを作ります。
+
+期待する処理：
+
+- `Body`には`source`と`amount`の2つのプロパティを入れる
+- `@Param()`: `type`というURLパラメータを取得する
+- `newReport`とうい変数を定義しそこに新しい`report`配列を格納していく
+
+皆さんも考えてみてください
+
+```typescript
+import { v4 as uuid } from 'uuid'
+
+//...
+
+@Post()
+  createReport(
+    @Body() { source, amount }: {
+      source: string
+      amount: number
+    },
+    @Param('type') type: string
+  ) {
+    const reportType = (type: string): ReportType => {
+      switch (type) {
+        case 'income':
+          return ReportType.INCOME
+        case 'expense':
+          return ReportType.EXPENSE
+        default:
+          throw new HttpException('レポートタイプに誤りがあります。: ' + type, HttpStatus.BAD_REQUEST);
+      }
+    }
+    const newReport = {
+      id: uuid(),
+      source,
+      amount,
+      created_at: new Date(),
+      updated_at: new Date(),
+      type: reportType(type)
+    }
+    data.report.push(newReport)
+    return newReport
+  }
+```
+
+簡単にコードの説明をします。
+
+- `@Post()`：HTTP POSTリクエストに応答するためのデコレータです。このエンドポイントはHTTP POSTメソッドでアクセスできます。
+
+- `@Body()`: HTTPリクエストのボディからデータを受け取るためのデコレータです。この場合、リクエストのボディから`source`と`amount`という2つのプロパティを取得しています。
+
+- `@Param('type')`: HTTPリクエストのパラメータからデータを受け取るためのデコレータです。この場合、`type`という名前のURLパラメータを取得しています。
+
+- `reportType`: これは`@GET`の使い回しです。コンポーネント化して使い回すのが理想ですね。
+
+- `newReport`: 新しいレポートを作成するためのオブジェクトです。UUIDを生成して、`source`、`amount`、`created_at`、`updated_at`、および変換された`type`を含みます。
+
+- `data.report.push(newReport)`: 作成した新しいレポートを既存のレポートの配列に追加します。
+
+- `return newReport`: 新しく作成したレポートオブジェクトをクライアントに返します。
+
+このエンドポイントを使って、クライアントはHTTP POSTリクエストを送信し、新しいレポートを作成できます。リクエストのボディには`source`と`amount`プロパティを含むJSONデータを送信し、URLパラメータ`type`には`income`または`expense`のいずれかを指定します。そして、サーバーは新しいレポートを作成し、その結果をJSON形式でクライアントに返します。
+
+
+
+#### 動作確認
+
+`income`に以下のようなデータを追加します
+
+データ入力の場所は`Body > row > JSON`です。
+
+![](/create-report.png?width=1600&height=2080)
+
+
+
+データが追加されているかの確認をします。
+
+![](/getAll2.png?width=1600&height=2080)
+
+`Udemy`が追加されていますね。
+
+
+
+### データの更新
+
+データの更新をするメソッドを作ります。
+
+`@Post`と同様に自分で考えたい方は、以下の要件で挑戦してみてください。
+
+期待する処理：
+
+- エンドポイントの`id`と`type`に対応するデータの更新をする
+- 更新するデータは`amount`と`sourse`
+- `reportUpdateById`という変数で指定した`type`と`id`が一致するか検証する
+- `reportUpdateById`が存在しない場合はエラーメッセージを出す
+- レポートの内容を更新するために、既存のレポートのオブジェクト（リクエストのボディから取得した`source`と`amount`）を上書きする＊少し難しいかも？？
+
+
+
+```typescript
+@Put(':id')
+  updateReport(
+    @Param('type') type: string,
+    @Param('id') id: string,
+    @Body() body: {
+      source: string
+      amount: number
+    }
+  ) {
+    const reportType = (type: string): ReportType => {
+      switch (type) {
+        case 'income':
+          return ReportType.INCOME
+        case 'expense':
+          return ReportType.EXPENSE
+        default:
+          throw new HttpException('レポートタイプに誤りがあります。: ' + type, HttpStatus.BAD_REQUEST);
+      }
+    }
+    const filteredReports = data.report.filter((report) => report.type === reportType(type));
+    const reportUpdateById = filteredReports.find((report) => report.id === id);
+
+    if (!reportUpdateById) {
+      throw new HttpException('利用できるデータがありません', HttpStatus.NOT_FOUND);
+    }
+
+    const reportUpdatedById = data.report.findIndex((report) => report.id === reportUpdateById.id)
+
+    data.report[reportUpdatedById] = {
+      ...data.report[reportUpdatedById],
+      ...body
+    }
+
+    return data.report[reportUpdatedById];
+  }
+```
+
+
+
+- `const reportUpdatedById`: 更新するレポートのインデックスを取得しています。
+- `data.report[reportUpdatedById] = { ...data.report[reportUpdatedById], ...body }`: レポートの内容を更新するために、既存のレポートのオブジェクトを`...body`（リクエストのボディから取得した`source`と`amount`）で上書きしています。
+
+😎↓ここから重要です（javascript使う人は必ず押さえておきたいやつです）↓
+
+`...data.report[reportUpdatedById]`この`...`はスプレット構文と言って、配列から特定のデータを取得するときによく使います。今回は、`report`のデータ配列の内容を新しく更新するので更新するデータだけを取り出しています。
+
+そして、更新したデータを新しい`data.report[reportUpdatedById]`に格納します。
+
+
+
+#### 動作確認
+
+ローカルサーバーを再起動したのでデータをもう一度作ります
+
+![](/update-data.png?width=1600&height=2080)
+
+
+
+`PUT`でリクエストを送ります。
+
+`amount`を2000に更新
+
+![](/updated-data.png?width=1600&height=2080)
+
+
+
+更新されたデータが格納されてるか確認します
+
+`Get`リクエストを送ってみます
+
+![](/updated-getall.png?width=1600&height=2080)
+
+無事更新されていますね。
+
+
+
+
+
+### データの削除
+
+データを削除するメソッドを作ります。
+
+`@Put`よりは簡単なのです
+
+期待する処理：
+
+- エンドポイントの`id`とに対応するデータの削除
+- `reportIndex`という変数で指定した`id`がデータに存在するか検証
+- `reportIndex`が存在しない場合はエラーメッセージを出す
+- `reportIndex`が存在していればそのインデックスを削除
+
+```typescript
+@HttpCode(204)
+@Delete(':id')
+  deleteReport(
+    @Param('id') id: string
+  ) {
+    const reportIndex = data.report.findIndex((report) => report.id === id);
+
+    if (reportIndex === -1) {
+      throw new HttpException('指定したidのデータは存在しません', HttpStatus.NOT_FOUND);
+    }
+
+    data.report.splice(reportIndex, 1)
+    return
+  }
+}	
+```
+
+
+
+- `const reportIndex`: 指定された`id`に対応するレポートのインデックスを`data.report`から見つけて格納します。
+
+- `if (reportIndex === -1)`: もし`reportIndex`が-1である場合（つまり、指定された`id`に対応するレポートが見つからない場合）、`HttpException`をスローして、クライアントにエラーメッセージを返します。
+
+- `data.report.splice(reportIndex, 1)`: `data.report`から指定された`id`に対応するレポートを削除します。`splice`メソッドは指定されたインデックスから1つの要素を削除する効果があります。
+
+- `return`: エンドポイントのレスポンスとして、削除が成功したことを示すために何も返しません（`undefined`を返します）。
+
+
+
+#### 動作確認をします
+
+エンドポイントで削除したいレポートの`id`を指定します。
+
+![](/delete-report.png?width=1600&height=2080)
+
+`status204`が帰ってきたら成功です。
+
+<br/>
+<br/>
+今日はまだ続きます！！
