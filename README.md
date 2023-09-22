@@ -50,3 +50,4 @@ Supabase types,sql commands(https://supabase.com/docs/guides/api/rest/generating
 # new-kapukapu
 # testsite
 # new-kapukapu-test
+# Naisei-App
