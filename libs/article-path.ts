@@ -106,6 +106,8 @@ export function getArticleMatter(article_dir: string): ArticleMetadata {
     indexPath: `/articles/${article_dir}/index.mdx`,
     articleDir: article_dir,
     subscrive: file.data.subscrive,
+    likes: file.data.likes,
+    id: file.data.id,
   }
 }
 
@@ -146,6 +148,8 @@ export async function getArticleMetadata(
     indexPath: `/articles/${article_dir}/index.mdx`,
     articleDir: article_dir,
     subscrive: file.data.subscrive,
+    likes: file.data.likes,
+    id: file.data.id,
   }
 }
 
@@ -167,4 +171,6 @@ export interface ArticleMetadata {
   title: string
   blurb: string
   subscrive: boolean
+  likes: number
+  id: string
 }

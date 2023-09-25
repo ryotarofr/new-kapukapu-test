@@ -1,9 +1,12 @@
+"use client"
+
 import React, { ReactElement } from 'react'
 import { LargeCard, MediumCard, SmallCard } from '@/components/ArticleCards'
 import type { CardDetails } from '@/components/ArticleCards'
 
 import style from './Gallery.module.css'
 import { ArticleMetadata } from '@/libs/article-path'
+import { useSessionContext } from '@supabase/auth-helpers-react'
 
 type CardElement = (CardDetails: CardDetails) => JSX.Element
 

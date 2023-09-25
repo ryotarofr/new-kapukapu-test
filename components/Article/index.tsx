@@ -1,4 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+"use client"
+
+import React, { PropsWithChildren, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Jumbotron from '@/components/Jumbotron'
 import Card from '@/components/Card'
@@ -11,6 +13,9 @@ import style from './Article.module.css'
 
 import TopButton from '../TopButton'
 import { Author } from '@/types/metadata'
+import { supabaseAdmin } from '@/libs/supabaseAdmin'
+import { useSessionContext } from '@supabase/auth-helpers-react'
+import { useUser } from '@/hooks/useUser'
 
 interface ArticleProps {
   article: ArticleMetadata
@@ -46,6 +51,64 @@ const Article = ({
   author,
   children,
 }: PropsWithChildren<ArticleProps>): React.ReactElement => {
+
+  // いいね機能
+
+  // const { supabaseClient } = useSessionContext()
+  const { user } = useUser()
+  // const [likesCount, setLikesCount] = useState(article.likes);
+
+
+  // useEffect(() => {
+  //   if (!user?.id)
+  //     return
+  //   const fechData = async () => {
+  //     const { data, error } = await supabaseClient
+  //       .from('liked_contents')
+  //       .select('*')
+  //       .eq('user_id', user.id)
+  //       .eq('content_id', contentId)
+  //       .single();
+
+  //     if (!error && data) {
+  //       setIsLiked(true);
+  //     }
+  //   }
+
+  //   fechData()
+  // }, [contentId, supabaseClient, user?.id])
+
+  // const handleLike = async () => {
+  //   const { data, error } = await supabaseClient
+  //     .from('likes')
+  //     .insert({ postId: article.id, user_id: user?.id });
+
+  //   if (error) {
+  //     console.error('Error liking the post:', error.message);
+  //   } else {
+  //     // Update the likes count
+  //     setLikesCount(likesCount + 1);
+  //   }
+  // };
+
+  // const handleUnlike = async () => {
+  //   const { error } = await supabaseClient
+  //     .from('likes')
+  //     .delete()
+  //     .eq('postId', article.id)
+  //     .eq('user_id', user?.id)
+
+  //   if (error) {
+  //     console.error('Error unliking the post:', error.message);
+  //   } else {
+  //     // Update the likes count
+  //     setLikesCount(likesCount - 1);
+  //   }
+  // };
+
+
+
+
   return (
     <>
       {/* <Jumbotron
@@ -71,6 +134,9 @@ const Article = ({
       /> */}
       <div className="relative max-w-5xl mt-20 mx-auto mb-0 pb-10">
         <div>
+          {/* <p>Likes: {likesCount}</p>
+          <button onClick={handleLike}>Like</button>
+          <button onClick={handleUnlike}>Unlike</button> */}
           <Card>
             <div className="p-4 md:p-8 lg:p-14">
               <h1 className="mt-3 mb-10 text-5xl md:text-left text-center">
