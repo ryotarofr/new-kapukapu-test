@@ -19,7 +19,7 @@ import { ImageResponse } from 'next/server'
 // const getAllMetadata = getAllArticlesMetadata()
 
 export const runtime = 'edge'
-export const alt = 'Kochie Engineering'
+export const alt = 'kapucode'
 export const size = {
   width: 1200,
   height: 630,

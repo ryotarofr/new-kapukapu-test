@@ -76,7 +76,7 @@ export async function generateMetadata({
     description: articleMetadata.blurb,
     twitter: {
       card: 'summary_large_image',
-      title: `${articleMetadata.title} | Kochie Engineering`,
+      title: `${articleMetadata.title} | kapucode`,
       creator: '@kochie',
       creatorId: '90334112',
       description: articleMetadata.blurb,
@@ -87,7 +87,7 @@ export async function generateMetadata({
     },
     openGraph: {
       url: `/articles/${articleMetadata.articleDir}`,
-      title: `${articleMetadata.title} | Kochie Engineering`,
+      title: `${articleMetadata.title} | kapucode`,
       description: articleMetadata.blurb,
       type: 'article',
       publishedTime: articleMetadata.publishedDate,
@@ -100,7 +100,7 @@ export async function generateMetadata({
       //     alt: articleMetadata.jumbotron.alt,
       //   },
       // ],
-      siteName: 'Kochie Engineering',
+      siteName: 'kapucode',
     },
   }
 }

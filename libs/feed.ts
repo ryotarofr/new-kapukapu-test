@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename)
 const buildFeed = async (): Promise<Feed> => {
   // This contains site level metadata like title, url, etc
   const feed = new Feed({
-    title: 'Kochie Engineering',
+    title: 'kapucode',
     description:
       "Hello I'm Robert! In this blog I talk about engineering, math, and technology.",
     id: 'http://blog.kochie.io/',
