@@ -13,6 +13,7 @@ import Quote from '@/components/Quote'
 import HaloInteractive from '@/components/Canvasses/ring-spinner'
 import { Quest1_1, Quest1_2, Quest1_3, Quest1_4, Quest1_5, Quest1_6, } from '@/components/Quest1'
 import { AnserButton } from '@/components/Quest1/Anser'
+import GoogleAdsense from '@/components/Adsence'
 
 type PropsOnlyChildren = {
   children?: ReactNode
@@ -252,6 +253,7 @@ export const components = {
   Quest1_4,
   Quest1_5,
   Quest1_6,
+  GoogleAdsense,
   AnserButton,
   iframe: Iframe,
   GithubProject,
