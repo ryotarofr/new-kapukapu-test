@@ -34,6 +34,7 @@ import Sidebar from '@/components/Sidebar'
 import getContentsByUserId from '@/actions/getContentsByUserId'
 import PostContent from '@/components/PostContent'
 import { subscribe } from 'diagnostics_channel'
+import GoogleAdsense from '@/components/Adsence'
 
 // const metadata = await buildMetadata()
 export const dynamic = 'force-static'
@@ -185,6 +186,15 @@ const ArticlePage = async ({ params }: { params: { articleId: string } }) => {
             <Article article={articleMetadata} author={author}>
               {content}
             </Article>
+            <div>
+              {process.env.NODE_ENV !== 'development' && (
+                <GoogleAdsense
+                  client="ca-pub-5112185578414045" //
+                  slot="XXXXXXXXXX"
+                  style={{ display: 'block' }}
+                />
+              )}
+            </div>
           </div>
           {/* <AuthorCardLeft author={author} /> */}
           {/* <ConvertKitForm formId="4897384" /> */}
